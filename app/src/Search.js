@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Search() {
-    const api = 'http://localhost:5000/';
+    const api = 'http://182.176.84.112:5000/';
 
     const [img, setImg] = useState("https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg");
     const [downloadFound, setDownloadFound] = useState(false);
