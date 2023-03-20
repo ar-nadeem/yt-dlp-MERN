@@ -67,39 +67,48 @@ router.route('/getinfo/:url').get((req, res) => {
 
 
 router.route('/download/').post((req, res) => {
+    console.log("CALLED TO DOWNLOAD FILE")
     const id = req.body.id;
     const format = req.body.format;
     const url = "https://www.youtube.com/watch?v=" + id;
     console.log(url);
 
-    Download.findOne({ url: id, format: format }).then((oldRecord) => { res.json("Already Downloaded"); }).catch(err => {
-
-        const location = path.join(__dirname, '..') + "\\" + id + '-' + format + ".mp4"
-        const out = { "ID": id, "Format": format, "Location": location };
-
-
-
-        const promise = youtubedl(url, {
-            output: location,
-            format: format,
-            noCheckCertificates: true,
-            noWarnings: true,
-            preferFreeFormats: true,
-            addHeader: [
-                'referer:youtube.com',
-                'user-agent:googlebot'
-            ]
-
-        }).then(output => { res.json(out); console.log(out) }).catch(err => { res.status(400).json("Error"); console.log(err) })
+    Download.findOne({ url: id, format: format }).then((oldRecord) => {
+        if (oldRecord === null) {
+            const location = path.join(__dirname, '..') + "\\" + id + '-' + format + ".mp4"
+            const out = { "ID": id, "Format": format, "Location": location };
 
 
-        const result = logger(promise, `Obtaining ${url}`)
-        console.log(result)
-    });
+
+            const promise = youtubedl(url, {
+                output: location,
+                format: format,
+                noCheckCertificates: true,
+                noWarnings: true,
+                preferFreeFormats: true,
+                addHeader: [
+                    'referer:youtube.com',
+                    'user-agent:googlebot'
+                ]
+
+            }).then(output => { res.json(out); console.log(out) }).catch(err => { res.status(400).json("Error"); console.log(err) })
+
+
+            const result = logger(promise, `Obtaining ${url}`)
+            console.log(result)
+        }
+        else {
+            res.json("Already Downloaded")
+        }
+    })
+
+
+
 
 });
 
-router.route('/download/').get((req, res) => {
+router.route('/downloadfile/').post((req, res) => {
+    console.log("CALLED TO GET FILE")
     const id = req.body.id;
     const format = req.body.format;
     const url = "https://www.youtube.com/watch?v=" + id;
