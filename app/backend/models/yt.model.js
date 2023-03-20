@@ -16,6 +16,12 @@ const downloadSchema = new Schema({
         unique: false,
         trim: true,
     },
+    thumbnail: {
+        type: String,
+        required: false,
+        unique: false,
+        trim: true,
+    },
     total: {
         type: Number,
         required: true,

@@ -13,15 +13,18 @@ router.route('/').get((req, res) => {
 
 // Save Downloads information to Database
 router.route('/addDownload/').post((req, res) => {
-    const url = req.body.url;
+    const urlO = req.body.url;
+    let url = String(urlO)
+    url = url.slice(-10)
     const format = req.body.format;
+    const img = req.body.thumbnail;
 
 
     oldRecord = Download.findOne({ url: url, format: format }).then((oldRecord) => {
         Download.findOneAndUpdate({ url: url, format: format }, { "total": (oldRecord.total + 1) }, { new: true }).then(() => res.json('Record Updated!')).catch(err => res.status(400).json('Error: ' + err));
 
     }).catch(err => {
-        const newDownload = new Download({ url, format, total: 1 })
+        const newDownload = new Download({ url, format, img, total: 1 })
         newDownload.save().then(() => res.json('Download added!')).catch(err => res.status(400).json('Error: ' + err));
     });
 
@@ -44,8 +47,9 @@ router.route('/getDownload/').get((req, res) => {
 
 // YT-DLP-API
 
-router.route('/getinfo/:url').get((req, res) => {
-    const url = "https://www.youtube.com/watch?v=" + req.params.url;
+router.route('/getinfo/').post((req, res) => {
+    //const url = "https://www.youtube.com/watch?v=" + req.params.url;
+    const url = req.body.url;
     console.log(url);
     const promise = youtubedl(url, {
         dumpSingleJson: true,
@@ -68,12 +72,17 @@ router.route('/getinfo/:url').get((req, res) => {
 
 router.route('/download/').post((req, res) => {
     console.log("CALLED TO DOWNLOAD FILE")
-    const id = req.body.id;
+    const url = req.body.url;
+    let id = String(url)
+    id = id.slice(-10)
+    console.log("ID = " + id)
+
+
     const format = req.body.format;
-    const url = "https://www.youtube.com/watch?v=" + id;
+    //const url = "https://www.youtube.com/watch?v=" + id;
     console.log(url);
 
-    Download.findOne({ url: id, format: format }).then((oldRecord) => {
+    Download.findOne({ url: url, format: format }).then((oldRecord) => {
         if (oldRecord === null) {
             const location = path.join(__dirname, '..') + "\\" + id + '-' + format + ".mp4"
             const out = { "ID": id, "Format": format, "Location": location };
@@ -109,9 +118,11 @@ router.route('/download/').post((req, res) => {
 
 router.route('/downloadfile/').post((req, res) => {
     console.log("CALLED TO GET FILE")
-    const id = req.body.id;
+    const url = req.body.url;
+    let id = String(url)
+    id = id.slice(-10)
     const format = req.body.format;
-    const url = "https://www.youtube.com/watch?v=" + id;
+    //const url = "https://www.youtube.com/watch?v=" + id;
     console.log(url);
 
 
