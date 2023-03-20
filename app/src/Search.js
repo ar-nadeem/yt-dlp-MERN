@@ -116,7 +116,6 @@ export default function Search() {
                 responseType: "blob",
             }).then((response) => {
                 //console.log(response.data);
-                //console.log(response.data)
                 const href = URL.createObjectURL(response.data);
                 setDownloadLink(href)
             }).catch(err => { toastErrorInternal(); setDownloadProgress(0); return })
