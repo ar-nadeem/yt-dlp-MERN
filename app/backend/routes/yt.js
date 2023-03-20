@@ -33,7 +33,7 @@ router.route('/addDownload/').post((req, res) => {
 
 });
 
-router.route('/wipeDownload/').post((req, res) => {
+router.route('/wipeDownload/').get((req, res) => {
     Download.deleteMany({}).then(() => res.json('Downloads wiped!')).catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -84,7 +84,7 @@ router.route('/download/').post((req, res) => {
 
     Download.findOne({ url: url, format: format }).then((oldRecord) => {
         if (oldRecord === null) {
-            const location = path.join(__dirname, '..') + "\\" + id + '-' + format + ".mp4"
+            const location = path.join(__dirname, '..', id + '-' + format + '.' + format)
             const out = { "ID": id, "Format": format, "Location": location };
 
 
