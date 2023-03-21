@@ -13,9 +13,9 @@ router.route('/').get((req, res) => {
 
 // Save Downloads information to Database
 router.route('/addDownload/').post((req, res) => {
-    const urlO = req.body.url;
-    let url = String(urlO)
-    url = url.slice(-10)
+    const url = req.body.url;
+    // let url = String(urlO)
+    // url = url.slice(-10)
     const format = req.body.format;
     const img = req.body.thumbnail;
 

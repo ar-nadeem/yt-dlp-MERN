@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Search() {
     const api = 'http://182.176.84.112:5000/';
-
+    //const api = 'http://localhost:5000/';
     const [img, setImg] = useState("https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg");
     const [downloadFound, setDownloadFound] = useState(false);
     const [searchURL, setSearchURL] = useState("");
@@ -74,7 +74,7 @@ export default function Search() {
         let infoJson = {};
         await axios.post(api + 'getinfo/', { url: myURL }).then((response) => {
             infoJson = response.data;
-        }).catch(err => { toastErrorURL(); isError = true; })
+        }).catch(err => { toastErrorURL(); isError = true; console.log(err) })
 
 
         if (!isError) {
