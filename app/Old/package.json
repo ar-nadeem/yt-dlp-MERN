@@ -1,5 +1,5 @@
 {
-  "name": "ytdlp-webapp",
+  "name": "app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,9 +9,8 @@
     "axios": "^1.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-loader-spinner": "^5.3.4",
     "react-scripts": "5.0.1",
-    "react-toastify": "^9.1.2",
+    "react-toastify": "^9.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -37,8 +36,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.2.7"
   }
 }

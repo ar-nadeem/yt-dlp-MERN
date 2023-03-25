@@ -1,13 +1,13 @@
 import './App.css';
-import Header from './Header';
-import Search from './Search';
-
+import Header from './components/Header';
+import Search from './components/Search';
 function App() {
   return (
     <div className="App">
-      <Header />
-      <div class="mt-5"></div>
-      <Search />
+      <Header visible="true" textCenter="YT-DLP" textLeft="Video Downloader" textRight="ArNadeem" />
+      <div className="py-10">
+        <Search />
+      </div>
     </div>
   );
 }
